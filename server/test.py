@@ -1,0 +1,1 @@
+ip = socket.gethostbyname(socket.gethostname())
