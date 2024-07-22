@@ -6,6 +6,7 @@ import os.path
 from psutil import net_if_addrs
 from re import findall
 import ipaddress
+from ip.main import IP
 
 class back_end:
     def __init__(self) -> None:
@@ -42,15 +43,24 @@ class back_end:
         result = []
         for index in range(4):
             try:
-                ip_split    = bool(int(ip[index]))
-                mask_split  = bool(int(mask[index]))
+                ip_split    = bin(int(ip[index])).replace("0b","")
+                mask_split  = bin(int(mask[index])).replace("0b","")
                 result_split = ""
                 for null in range(8-len(ip_split)):
                     ip_split += "0"
                 for null in range(8-len(mask_split)):
                     mask_split += "0"
-                for null in range(8):
-                    pass #------------------------------------------------------------
+                for index_2 in range(8):
+                    result_split += f"{int(ip_split[index_2]) and int(mask_split[index_2])}"
+                result.append(int(result_split, base=2))
             except:
                 self.validate_deafault_ip = ["#00#","l'adresse ou le masque fournie n'est pas correcte"]
                 return None
+        
+        self.json.close()
+        Ip = IP(f"{ip} /{len()}")#-----------------------------------------------------------------------------------------
+
+
+
+        self.validate_deafault_ip = True
+        return None
