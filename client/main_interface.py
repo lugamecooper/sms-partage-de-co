@@ -57,4 +57,5 @@ class main:
                         if self.back.validate_deafault_ip[0] == "#00#":
                             self.label_error_first_use.configure(text=self.back.validate_deafault_ip[1])
                             break
+                        
 main()

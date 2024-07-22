@@ -2,3 +2,5 @@
 /exe
 /client/test.py
 /server/test.py
+/client/__pycache__
+/client/ip/__pycache__
