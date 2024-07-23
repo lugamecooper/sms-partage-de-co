@@ -17,6 +17,8 @@ class main:
         self.fen._state_before_windows_set_titlebar_color = 'zoomed'
         if self.back.config["first use"]:
             self.first_use()
+        else:
+            pass
 
         self.fen.mainloop()
 
@@ -50,12 +52,14 @@ class main:
 
     def get_first_use(self):
         if self.first_use_test_bool_1:
-            self.back.check_ip_and_mask(self.dropdown_menu_first_use.get(),self.netmask_and_data[self.dropdown_menu_first_use.get()])
+            self.back.check_ip_and_mask(self.dropdown_menu_first_use.get(), self.netmask_and_data[self.dropdown_menu_first_use.get()])
             while True:
                 if self.back.validate_deafault_ip:
                     if type(self.back.validate_deafault_ip) == type([]):
                         if self.back.validate_deafault_ip[0] == "#00#":
                             self.label_error_first_use.configure(text=self.back.validate_deafault_ip[1])
                             break
-                        
+                    elif self.back.validate_deafault_ip:
+                        break
+        self.frame_first_use.destroy()
 main()

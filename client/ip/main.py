@@ -1,7 +1,7 @@
 import re
 class IP:
     """
-    this class contain 
+    this class can return
         the ipv4, 
         the binary mask, 
         the mask, 
@@ -9,7 +9,7 @@ class IP:
         the network ip
     """
     def __init__(self, ip="ex: 192.168.0.1 optional[/24]"):
-        self.test = re.findall(r"(\d{1,3})[.](\d{1,3})[.](\d{1,3})[.](\d{1,3}).?(\d{1,2})?",ip)
+        self.test = re.findall(r"(\d{1,3})[.](\d{1,3})[.](\d{1,3})[.](\d{1,3}) ?.?(\d{1,2})?",ip)
         if self.test:
             self.test = self.test[0]
             self.test_ip()
@@ -21,6 +21,7 @@ class IP:
             if self.mask_cidr and self.test[4]:
                 self.mask()
                 self.network()
+                self.broadcast()
             else:
                 self.mask_bin = None
                 self.mask_cidr = None
@@ -28,7 +29,6 @@ class IP:
                 self.ipv4_network = None
                 self.ipv4_network_bin = None
                 self.type_adress = None
-            
         else:
             raise Exception(f"specify an ip")
         
@@ -138,3 +138,23 @@ class IP:
                 tempo += "0"
         self.ipv4_network += f"{int(tempo,2)}"
         self.ipv4_network_bin += f"{tempo}"
+
+    def broadcast(self):
+        self.mask_bin
+        self.ipv4_network_bin
+        self.ipv4_broadcast_bin = ""
+        for index in range(len(self.mask_bin)):
+            try:
+                if int(self.mask_bin[index]) and int(self.ipv4_network_bin[index]):
+                    self.ipv4_broadcast_bin += "1"
+                elif int(self.mask_bin[index]) and not int(self.ipv4_network_bin[index]):
+                    self.ipv4_broadcast_bin += "0"
+                elif int(self.mask_bin[index]) == 0:
+                    self.ipv4_broadcast_bin += "1"
+            except Exception as er:
+                if self.mask_bin[index] == ".":
+                    self.ipv4_broadcast_bin += "."
+        ipv4_broadcast = self.ipv4_broadcast_bin.split(".")
+        for index in range(len(ipv4_broadcast)):
+            ipv4_broadcast[index] = f"{int(ipv4_broadcast[index],base=2)}"
+        self.ipv4_broadcast = ".".join(ipv4_broadcast)

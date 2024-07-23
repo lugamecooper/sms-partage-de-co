@@ -35,6 +35,16 @@ class back_end:
         return data,network
     
     def check_ip_and_mask(self,ip = str(),mask = str()):
+        def get_len_mask(mask : list):
+            len_mask = 0
+            for Byte in mask:
+                for bite in Byte:
+                    if bite == "1":
+                        len_mask += 1
+            return len_mask
+
+        len_mask = 0
+
         ip = ip.split(".")
         mask = mask.split(".")
         if not len(ip) == 4 and len(mask) == 4:
@@ -45,6 +55,7 @@ class back_end:
             try:
                 ip_split    = bin(int(ip[index])).replace("0b","")
                 mask_split  = bin(int(mask[index])).replace("0b","")
+                len_mask += get_len_mask(mask_split)
                 result_split = ""
                 for null in range(8-len(ip_split)):
                     ip_split += "0"
@@ -58,9 +69,12 @@ class back_end:
                 return None
         
         self.json.close()
-        Ip = IP(f"{ip} /{len()}")#------------------------------------------------------------------------------------------
+        Ip = IP(f"{".".join(ip)} /{len_mask}")
+        self.config["broadcast ip"] = Ip.ipv4_broadcast
+        self.config["first use"] = False
 
-
+        json.dump(self.config,open(os.path.join(os.path.split(__file__)[0],"config_back.json"),"w"))
+        self.json = open(os.path.join(os.path.split(__file__)[0],"config_back.json"))
 
         self.validate_deafault_ip = True
         return None
