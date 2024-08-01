@@ -30,6 +30,7 @@ class IP:
                 self.ipv4_network_bin = None
                 self.type_adress = None
         else:
+            print(self.test)
             raise Exception(f"specify an ip")
         
     def test_ip(self):
@@ -140,8 +141,6 @@ class IP:
         self.ipv4_network_bin += f"{tempo}"
 
     def broadcast(self):
-        self.mask_bin
-        self.ipv4_network_bin
         self.ipv4_broadcast_bin = ""
         for index in range(len(self.mask_bin)):
             try:
