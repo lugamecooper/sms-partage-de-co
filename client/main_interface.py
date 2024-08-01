@@ -1,6 +1,6 @@
+import fenetre.first_use
 from main_back import back_end
 import customtkinter as tk
-from fenetre.first_use import first_use
 import _thread
 import socket
 
@@ -17,10 +17,9 @@ class main:
         self.fen.title("messagerie canardessque")
         self.fen._state_before_windows_set_titlebar_color = 'zoomed'
         if self.back.config["first use"]:
-            first_use(self.fen, self.back).first_use()
+            fenetre.first_use.first_use(self.fen, self.back).first_use()
         else:
             pass
-
         self.fen.mainloop()
 
     
