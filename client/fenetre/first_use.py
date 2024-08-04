@@ -1,7 +1,6 @@
 import customtkinter as tk
 import main_back
-
-# import next windows
+from fenetre.login import login
 
 class first_use :
     def __init__(self,fen : tk.CTk, back : main_back.back_end) -> None:
@@ -30,4 +29,4 @@ class first_use :
                     self.label_error_first_use.configure(text=result_back[1])
             elif result_back:
                 self.frame_first_use.destroy()
-                # call the next windows
+                login(self.back,self.fen)

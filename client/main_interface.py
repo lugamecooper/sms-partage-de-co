@@ -1,8 +1,7 @@
 from fenetre.first_use import first_use
+from fenetre.login import login
 from main_back import back_end
 import customtkinter as tk
-import _thread
-import socket
 
 class main:
     def __init__(self) -> None:
@@ -19,7 +18,7 @@ class main:
         if self.back.config["first use"]:
             first_use(self.fen, self.back).first_use()
         else:
-            pass
+            login(self.back,self.fen)
 
         self.fen.mainloop()
 
