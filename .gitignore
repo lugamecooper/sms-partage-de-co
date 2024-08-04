@@ -1,7 +1,9 @@
-/client interface.exe
-/client.exe
-/main_aux.exe
 /output
-/serveur.exe
 /exe
-/client/output
+/client/test.py
+/server/test.py
+/client/__pycache__
+/client/ip/__pycache__
+/client/test_2.py
+/client/fenetre/__pycache__
+/client/fenetre/test.py

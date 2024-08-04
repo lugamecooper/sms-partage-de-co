@@ -16,7 +16,7 @@ class main:
         while True:
             pass
 
-    def on_new_client(self,socket):
+    def on_new_client(self,socket : socket):
         #gére la réception des message de chaque client de manière individuel
         #si un message est reçus apelle la méthode send
         self.client_connecter.append(socket)
@@ -44,9 +44,10 @@ class main:
             del info_connexion
             start_new_thread(self.on_new_client,(self.client,))
 
-    def send(self,msg,exeption):
+    def send(self,msg : str,exeption):
         #envoi un message à tout connecter à l'instant T sauf au client qui as émis le message
         for client in self.client_connecter:
+            client : socket
             if client != exeption:
                 client.send(msg.encode('UTF-8'))
 
