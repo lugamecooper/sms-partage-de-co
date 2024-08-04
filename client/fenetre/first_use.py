@@ -7,7 +7,6 @@ class first_use :
     def __init__(self,fen : tk.CTk, back : main_back.back_end) -> None:
         self.back = back
         self.fen = fen
-        pass
 
     def first_use(self):
         self.frame_first_use = tk.CTkFrame(self.fen, width=200, height=200)
