@@ -5,10 +5,6 @@ class login:
     def __init__(self, back : back_end,fen : tk.CTk) -> None:
         self.back = back
         self.fen = fen
-        self.fen.anchor("n")
-
-        # variable use to be check boolean
-        self.first_use_test_bool_1 = True
 
         self.login()
 
