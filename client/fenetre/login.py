@@ -11,10 +11,11 @@ class login:
 
     def login(self):
         self.frame_login = tk.CTkFrame(self.fen)
-        label = tk.CTkLabel(self.frame_login, text="connectez-vous", text_color="blue")
+        self.frame_login.anchor("center")
+        label = tk.CTkLabel(self.frame_login, text="connectez-vous")
         self.entry_login = tk.CTkEntry(self.frame_login, placeholder_text="nom d'utilisateur")
         self.entry_password = tk.CTkEntry(self.frame_login, placeholder_text='mot de passe')
-        checkbox_connexion = tk.CTkCheckBox(self.frame_login, text="souhaitez-vous rester connecter", text_color="blue")
+        checkbox_connexion = tk.CTkCheckBox(self.frame_login, text="souhaitez-vous rester connecter")
         self.button_connexion = tk.CTkButton(self.frame_login, text="connexion")
         
         self.frame_login.grid()
