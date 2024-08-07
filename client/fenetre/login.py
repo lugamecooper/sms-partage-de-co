@@ -18,7 +18,7 @@ class login:
         checkbox_connexion = tk.CTkCheckBox(self.frame_login, text="souhaitez-vous rester connecter")
         self.button_connexion = tk.CTkButton(self.frame_login, text="connexion")
         
-        self.frame_login.grid()
+        self.frame_login.grid(pady=round(self.fen.winfo_screenheight()/4))
         label.grid(padx = 20, pady = 10)
         self.entry_login.grid()
         self.entry_password.grid()
