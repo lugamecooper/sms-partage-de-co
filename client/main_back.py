@@ -12,6 +12,8 @@ class back_end:
         self.config = json.load(self.json)
 
         #define default boolean
+        self.connection_error = False
+        self.connection_started = False
         self.validate_deafault_ip = False
 
         #define default variable
@@ -33,17 +35,22 @@ class back_end:
         
     def connect_server(self):
         self.connection_server = socket(AF_INET, SOCK_STREAM)
-        while True:
+        self.connection_error = False
+        self.connection_started = False
+        for null in range(3):
             try:
-                self.connection_server.connect()
+                self.connection_server.connect(self.config["target ip"])
+                self.connection_started = True
                 break
             except:
-                pass
+                self.connection_error = True
         while True:
-            test = self.connection_server.recv(1024)
-            if test:
-                self.message_reciev = test
+            message_temporary = self.connection_server.recv(1024)
+            if message_temporary:
+                self.message_reciev = message_temporary
 
+    def lunch_connection(self):
+        _thread.start_new_thread(self.connect_server,())
         
     def get_log(self):
         pass
