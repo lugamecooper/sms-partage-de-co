@@ -29,4 +29,29 @@ class first_use :
                     self.label_error_first_use.configure(text=result_back[1])
             elif result_back:
                 self.frame_first_use.destroy()
-                login(self.back,self.fen)
+                self.lunch_connection()
+
+    def lunch_connection(self):
+        self.back.lunch_connection()
+        while not self.back.connection_error and not self.back.connection_started:
+            pass
+        if self.back.connection_started:
+            login(self.back,self.fen)
+        else:
+            self.frame_error_connection = tk.CTkFrame(self.fen)
+            label = tk.CTkLabel(self.frame_error_connection, text="une erreur est survenue lors de la connection")
+            boutton_1 = tk.CTkButton(self.frame_error_connection, text="retenter de se connecter", command=self.relaunch_connection)
+            boutton_2 = tk.CTkButton(self.frame_error_connection, text="saisir une nouvelle adresse ip", command=self.enter_new_ip)
+
+            self.frame_error_connection.grid()
+            label.grid()
+            boutton_1.grid()
+            boutton_2.grid()
+
+    def relaunch_connection(self):
+        self.frame_error_connection.destroy()
+        self.lunch_connection()
+    
+    def enter_new_ip(self):
+        self.frame_error_connection.destroy()
+        first_use(self.fen, self.back).first_use()

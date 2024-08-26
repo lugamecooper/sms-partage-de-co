@@ -34,6 +34,11 @@ class main:
             boutton_1 = tk.CTkButton(self.frame_error_connection, text="retenter de se connecter", command=self.relaunch_connection)
             boutton_2 = tk.CTkButton(self.frame_error_connection, text="saisir une nouvelle adresse ip", command=self.enter_new_ip)
 
+            self.frame_error_connection.grid()
+            label.grid()
+            boutton_1.grid()
+            boutton_2.grid()
+
     def relaunch_connection(self):
         self.frame_error_connection.destroy()
         self.lunch_connection()
@@ -41,7 +46,5 @@ class main:
     def enter_new_ip(self):
         self.frame_error_connection.destroy()
         first_use(self.fen, self.back).first_use()
-        
-
 
 main()

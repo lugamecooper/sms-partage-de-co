@@ -45,6 +45,8 @@ class back_end:
             except:
                 self.connection_error = True
         while True:
+            if self.connection_error:
+                break
             message_temporary = self.connection_server.recv(1024)
             if message_temporary:
                 self.message_reciev = message_temporary
