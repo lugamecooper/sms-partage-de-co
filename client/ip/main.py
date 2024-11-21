@@ -130,7 +130,7 @@ class IP:
         tempo = ""
         for i in range(len(self.ipv4_bin)):
             if self.ipv4_bin[i] == "1" and self.mask_bin[i] == "1":
-               tempo += "1"
+                tempo += "1"
             elif self.ipv4_bin[i] == "." and self.mask_bin[i] == ".":
                 self.ipv4_network += f"{int(tempo,2)}."
                 self.ipv4_network_bin += f"{tempo}."
