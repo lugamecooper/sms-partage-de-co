@@ -1,12 +1,18 @@
 from socket import socket,gethostbyname,gethostname,AF_INET,SOCK_STREAM
 from _thread import start_new_thread
 from re import findall
-
+from os import system,name
 class main:
     def __init__(self) -> None:
         #initialise le serveur et lance en parralèlle la méthode start_co
         self.client_connecter = []
-        self.ip_pc = gethostbyname(gethostname())
+        system("ip config -all")
+        self.ip_pc = input("qu'elle est l'ip ? ")
+        if name == "nt":
+            system("cls")
+        else:
+            system("clear")
+        del system,name
         code_session = findall(r"\d*.\d*.\d*.(\d*)",self.ip_pc)
         print(f"l'ip est {self.ip_pc}")
         print(f"le code session est {code_session}")
