@@ -11,10 +11,10 @@ chemin = input("qu'elle est le chemin de téléchargement de l'application ? ")
 if not chemin:
     chemin = os.path.split(__file__)[0]
 try:
-    url = "https://github.com/lugamecooper/sms-partage-de-co/archive/refs/tags/V2.1.zip"
-    urllib.request.urlretrieve(url, filename=f"{os.path.join(chemin,"v2.1.zip")}")
-    zipfile.ZipFile(os.path.join(chemin,"v2.1.zip")).extractall()
-    os.remove(os.path.join(chemin,"v2.1.zip"))
+    url = "https://github.com/lugamecooper/sms-partage-de-co/archive/refs/tags/V2.2.zip"
+    urllib.request.urlretrieve(url, filename=f"{os.path.join(chemin,"v2.2.zip")}")
+    zipfile.ZipFile(os.path.join(chemin,"v2.2.zip")).extractall()
+    os.remove(os.path.join(chemin,"v2.2.zip"))
 except Exception as er:
     print(er)
     input()
