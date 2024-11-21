@@ -47,7 +47,6 @@ class main:
     def send(self,msg : str,exeption):
         #envoi un message à tout connecter à l'instant T sauf au client qui as émis le message
         for client in self.client_connecter:
-            client : socket
             if client != exeption:
                 client.send(msg.encode('UTF-8'))
 
