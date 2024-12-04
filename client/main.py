@@ -18,12 +18,12 @@ class main_client_interface:
         self.auto_msg = False
         self.check_msg = False
         if int(input("se connecter avec un code session [1]\nse connecter avec une adresse ip [0] : ")):
-            ip_host = input("qu'elle est le code session : ")
+            ip_host = input("quel est le code session : ")
             ip_co = findall(r"(\d*.\d*.\d*).\d*",gethostbyname(gethostname()))[0]
             self.connexion_server = socket(AF_INET, SOCK_STREAM)
             self.connexion_server.connect((f"{ip_co}.{ip_host}",10999))
         else:
-            ip_host = input("qu'elle est l'adresse ip : ")
+            ip_host = input("quelle est l'adresse ip : ")
             self.connexion_server = socket(AF_INET, SOCK_STREAM)
             self.connexion_server.connect((f"{ip_host}",10999))
         system("cls")
