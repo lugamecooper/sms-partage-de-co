@@ -7,7 +7,10 @@ import customtkinter as ct
 
 class main_client_interface:
     def __init__(self) -> None:
+        ct.set_default_color_theme("dark-blue")
+        ct.set_appearance_mode("dark")
         self.list_msg = []
+        self.list_label_msg = []
         self.connexion_server = socket(AF_INET, SOCK_STREAM)
         self.connexion_server.connect((f"127.0.0.1",10999))
         
@@ -15,13 +18,29 @@ class main_client_interface:
         start_new_thread(self.reciev,())
         self.fen = ct.CTk(className="messagerie")
         self.fen.title = "messagerie"
-        self.fen.geometry(f"{self.fen.winfo_screenwidth()}x{self.fen.winfo_screenheight()}")
         self.fen.wm_iconbitmap(join(split(__file__)[0],"Sans-titre.ico"))
         self.fen.focus_force()
-        pass
-        self.fen.state('normal')
+        
+        self.set_pseudo_frame()
 
+        self.fen.after(0, lambda: self.fen.wm_state('zoomed'))
         self.fen.mainloop()
+
+    def set_interface(self):
+        self.main_frame = ct.CTkFrame(self.fen)
+        self.msg_frame = ct.CTkFrame(self.main_frame)
+        for i in range(50):
+            self.list_label_msg.append(ct.CTkLabel(self.msg_frame,text="test"))
+        self.input_frame = ct.CTkFrame(self.main_frame)
+        self.msg_display()
+
+    def msg_display(self):
+        if len(self.list_label_msg) > 100:
+            for i in range(len(self.list_label_msg)-100):
+                self.list_msg.pop(0)
+        for label in self.list_label_msg:
+            label : ct.CTkLabel
+            label.pack()
 
     def reciev(self):
         while True:
@@ -100,5 +119,24 @@ class main_client_interface:
                     test_2 = 0
         msg_a_envoyer = tempo
         self.connexion_server.send(f"[{self.pseudo}]({msg_a_envoyer})".encode(encoding="ascii",errors="xmlcharrefreplace"))
+
+    def set_pseudo_frame(self):
+        self.frame_pseudo = ct.CTkFrame(self.fen)
+        
+        self.label_pseudo = ct.CTkLabel(self.frame_pseudo, text="entrer vôtre pseudo : ",anchor="w")
+        self.label_pseudo.pack()
+        self.entry_pseudo = ct.CTkEntry(self.frame_pseudo)
+        self.entry_pseudo.pack()
+        self.Button_vallid = ct.CTkButton(self.frame_pseudo,text="Vallidez vôtre pseudo",command=self.get_pseudo)
+        self.Button_vallid.pack()
+
+        self.frame_pseudo.pack()
+
+    def get_pseudo(self):
+        if self.entry_pseudo.get():
+            self.pseudo = self.entry_pseudo.get()
+            self.frame_pseudo.destroy()
+            self.set_interface()
+            self.fen.update()
 
 main_client_interface()
