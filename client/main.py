@@ -1,5 +1,5 @@
 from os import system
-from socket import gethostbyname,gethostname,AF_INET,SOCK_STREAM,socket
+from socket import AF_INET, SOCK_STREAM, socket
 from _thread import start_new_thread
 from re import findall
 from subprocess import Popen
@@ -17,22 +17,21 @@ class main_client_interface:
         #ouvre le terminal destiné à la saisie des message dans une nouvelle fenêtre
         self.auto_msg = False
         self.check_msg = False
-        if int(input("se connecter avec un code session [1]\nse connecter avec une adresse ip [0] : ")):
-            ip_host = input("quel est le code session : ")
-            ip_co = findall(r"(\d*.\d*.\d*).\d*",gethostbyname(gethostname()))[0]
-            self.connexion_server = socket(AF_INET, SOCK_STREAM)
-            self.connexion_server.connect((f"{ip_co}.{ip_host}",10999))
-        else:
-            ip_host = input("quelle est l'adresse ip : ")
-            self.connexion_server = socket(AF_INET, SOCK_STREAM)
-            self.connexion_server.connect((f"{ip_host}",10999))
+        ip_host = input("quelle est l'adresse ip : ")
+        self.connexion_server = socket(AF_INET, SOCK_STREAM)
+        self.connexion_server.connect((f"{ip_host}",10999))
         system("cls")
-        start_new_thread(self.reciev,())
         start_new_thread(self.commande_recieve,())
         Popen(f'start cmd /C "{join(dirname(__file__),"main_aux.py")}"',shell=True)
-        #la boucle infinie sert à maintenire le coeur gérant l'interface d'affichage des message
         while True:
-            pass
+            try:
+                msg_recu = self.connexion_server.recv(4096).decode(encoding="utf-8")
+            except:
+                pass
+            if msg_recu:
+                self.auteur,self.message = findall(r"\[([\w|\W]*)\]\(([\w|\W]*)\)",msg_recu)[0]
+                self.auto_msg = False
+                self.print_msg()
 
     def print_msg(self):
         #affiche le message
@@ -64,17 +63,5 @@ class main_client_interface:
                 self.auto_msg = True
                 self.print_msg()
                 self.connexion_server.send(msg_recu.encode(encoding="utf-8"))
-
-    def reciev(self):
-        #receptionne les message venant du serveur
-        while True:
-            try:
-                msg_recu = self.connexion_server.recv(4096).decode(encoding="utf-8")
-            except:
-                pass
-            if msg_recu:
-                self.auteur,self.message = findall(r"\[([\w|\W]*)\]\(([\w|\W]*)\)",msg_recu)[0]
-                self.auto_msg = False
-                self.print_msg()
 
 main_client_interface()

@@ -1,55 +1,26 @@
-from colorama import init,Fore
-from os import system
-from socket import gethostbyname,gethostname,AF_INET,SOCK_STREAM,socket
+from socket import AF_INET,SOCK_STREAM,socket
 from _thread import start_new_thread
 from re import findall
-from os.path import join,dirname
-import tkinter
-
-init(True)
+from os.path import join,split
+from os import getlogin
+import customtkinter as ct
 
 class main_client_interface:
     def __init__(self) -> None:
         self.list_msg = []
-        self.auto_msg = False
-        self.check_msg = False
-        if int(input("se connecter avec un code session [1]\nse connecter avec une adresse ip [0] : ")):
-            ip_host = input("qu'elle est le code session : ")
-            ip_co = findall(r"(\d*.\d*.\d*).\d*",gethostbyname(gethostname()))[0]
-            self.connexion_server = socket(AF_INET, SOCK_STREAM)
-            self.connexion_server.connect((f"{ip_co}.{ip_host}",10999))
-        else:
-            ip_host = input("qu'elle est l'adresse ip : ")
-            self.connexion_server = socket(AF_INET, SOCK_STREAM)
-            self.connexion_server.connect((f"{ip_host}",10999))
-        system("cls")
-        self.pseudo = input("qu'elle est vôtre pseudo : ")
-        system("cls")
+        self.connexion_server = socket(AF_INET, SOCK_STREAM)
+        self.connexion_server.connect((f"127.0.0.1",10999))
+        
+        self.pseudo = getlogin()
         start_new_thread(self.reciev,())
-        self.fen = tkinter.Tk("messagerie",className="messagerie")
+        self.fen = ct.CTk(className="messagerie")
+        self.fen.title = "messagerie"
         self.fen.geometry(f"{self.fen.winfo_screenwidth()}x{self.fen.winfo_screenheight()}")
-        self.fen.iconphoto(False, tkinter.PhotoImage(file=join(dirname(__file__),"Sans titre.png")))
-        self.div = tkinter.Frame(self.fen)
-        self.listbox = tkinter.Listbox(self.div)
-        scrollbar = tkinter.Scrollbar(self.div)
-        self.listbox.config(yscrollcommand=scrollbar.set,height=self.fen.winfo_screenheight(),width=125)
-        scrollbar.config(command=self.listbox.yview)
-        self.listbox.pack(side=tkinter.LEFT)
-        scrollbar.pack(side=tkinter.RIGHT, fill=tkinter.Y)
-        for i in range(50):
-            self.listbox.insert(tkinter.END, "")
-        self.div.pack(side=tkinter.LEFT)
+        self.fen.wm_iconbitmap(join(split(__file__)[0],"Sans-titre.ico"))
+        self.fen.focus_force()
+        pass
+        self.fen.state('normal')
 
-        self.div_input = tkinter.Frame(self.fen)
-        self.zone_input = tkinter.Text(self.div_input,width=125,height=30)
-        self.bouton = tkinter.Button(self.div_input,command=self.send,border=12,text="envoyer le message")
-
-
-        self.div_input.pack()
-        self.zone_input.pack()
-        for i in range(2):
-            tkinter.Label(self.div_input,text="").pack()
-        self.bouton.pack()
         self.fen.mainloop()
 
     def reciev(self):
@@ -83,11 +54,11 @@ class main_client_interface:
                 self.affichage()
 
     def affichage(self):
-        self.listbox.delete(first=0,last=49)
+        """self.listbox.delete(first=0,last=49)
         for i in range(len(self.list_msg)):
-            self.listbox.insert(tkinter.END,self.list_msg[i])
+            self.listbox.insert(ct.END,self.list_msg[i])
         for i in range(50-len(self.list_msg)):
-            self.listbox.insert(tkinter.END,"")
+            self.listbox.insert(ct.END,"")"""
         self.div.update()
         
     def send(self):
