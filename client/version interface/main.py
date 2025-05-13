@@ -12,7 +12,7 @@ class main_client_interface:
         self.list_msg = []
         self.list_label_msg = []
         self.connexion_server = socket(AF_INET, SOCK_STREAM)
-        self.connexion_server.connect((f"127.0.0.1",10999))
+        self.connexion_server.connect(("127.0.0.1",10999))
         
         self.pseudo = getlogin()
         start_new_thread(self.reciev,())
@@ -63,7 +63,6 @@ class main_client_interface:
                 msg_recu = tempo
             except:
                 msg_recu = None
-                pass
             if msg_recu:
                 if len(self.list_msg)<= 50:
                     self.list_msg.append(msg_recu)
@@ -73,18 +72,17 @@ class main_client_interface:
                 self.affichage()
 
     def affichage(self):
-        """self.listbox.delete(first=0,last=49)
+        self.listbox.delete(first=0,last=49)
         for i in range(len(self.list_msg)):
             self.listbox.insert(ct.END,self.list_msg[i])
         for i in range(50-len(self.list_msg)):
-            self.listbox.insert(ct.END,"")"""
+            self.listbox.insert(ct.END,"")
         self.div.update()
         
     def send(self):
         msg_a_envoyer = self.zone_input.get("1.0","end").replace("\n","; ")
         self.zone_input.delete("1.0","end")
         msg = f"{msg_a_envoyer} : [{self.pseudo}]"
-
         test = range(len(msg)%40)
         tempo = ""
         test_2 = 0
@@ -138,5 +136,5 @@ class main_client_interface:
             self.frame_pseudo.destroy()
             self.set_interface()
             self.fen.update()
-
+print()
 main_client_interface()
